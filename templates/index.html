@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<API-KWY>&libraries=places"></script>
+    <!-- <script>
+        function initialize() {
+            var input = document.getElementById('fromloc');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            // google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            //     var place = autocomplete.getPlace();
+            //     document.getElementById('city2').value = place.name;
+            //     document.getElementById('cityLat').value = place.geometry.location.lat();
+            //     document.getElementById('cityLng').value = place.geometry.location.lng();
+            // });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script> -->
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-left">
+        <button class="headers-button">Button 1</button>
+        <button class="headers-button">Button 2</button>
+      </div>
+      <div class="header-right">
+        <button class="headers-button">Button 3</button>
+        <img class = "profile-icon" src="../static/profile-icon.png" alt="Profile Icon">
+      </div>  
+    </div>
+    <hr>
+    <div class="container">
+      <div class="left-section">
+        <div>
+          <input id="fromloc" class="search-field" type="text" placeholder="Address Lookup">
+        </div>
+        <div class="info-section">
+          <!-- Information section -->
+          <label></label>
+          <input>
+        </div>
+        <div class="map-section">
+          <!-- Map section -->
+        </div>
+        <div>
+          <button class="submit-button">Create Listing Description</button>
+        </div>
+      </div>
+      <div class="right-section" id="chat-messages">
+        <!-- Chat messages -->
+      </div>
+    </div>
+    <hr>
+    <script src="../static/main.js"></script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 venv
-static
-templates
+# static
+# templates
 hotel-book-2d76a-f8d8301046ea.json
-app.py
+# app.py

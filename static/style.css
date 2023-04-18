@@ -1,0 +1,143 @@
+body {
+  margin-left: 5%;
+  margin-right: 5%;
+  padding: 0;
+  font-family: sans-serif;
+  background: linear-gradient(to bottom right, #0074D9, #B10DC9);
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.header-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.headers-button{
+  background: linear-gradient(to bottom right, #953bf4, #ff2bc3);
+}
+
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.profile-icon {
+  width: 7%;
+  height: 7%;
+}
+
+.header button {
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.left-section {
+  width: 50%;
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.left-section > * {
+  margin-bottom: 20px;
+}
+
+.search-field {
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  width: 95%;
+  font-size: 16px;
+  background-color: rgba(211, 211, 211, 0.5);
+}
+.search-field::placeholder {
+  color: white;
+  text-align: center;
+}
+.info-section {
+  background-color: rgba(211, 211, 211, 0.5);;
+  padding: 10px;
+  border-radius: 5px;
+  height: 200px;
+  border-radius: 15px;
+}
+
+.map-section {
+  background-color: rgba(211, 211, 211, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  height: 200px;
+  border-radius: 15px;
+}
+
+.submit-button {
+  padding: 10px;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  background: linear-gradient(to bottom right, #953bf4, #ff2bc3);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.submit-button:hover {
+  background-color: #3e8e41;
+}
+
+.right-section {
+  width: 70%;
+  /* height: 100%; */
+  background-color: rgba(211, 211, 211, 0.5);
+  padding: 20px;
+  margin-left: 10%;
+  margin-top: 1%;
+  margin-bottom: 3%;
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* overflow-y: scroll; */
+}
+
+.message {
+  margin: 10px 0;
+  display: flex;
+}
+
+.message.bot {
+  justify-content: flex-start;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message p {
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
