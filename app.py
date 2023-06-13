@@ -83,17 +83,9 @@ def realtorScrap(address):
                 "message":"property details unavailable please manually enter property details"
                 })
 
-@app.route('/<id>', methods=['GET'])
+@app.route('/<int:id>', methods=['GET'])
 def home(id):
-    DATABASE_URL = os.getenv("DATABASE_URL")
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-    query1 = conn.cursor()
-    query1.execute("Select Property_address,Created_date from public.users where User_id = %s",(id,))
-    data = query1.fetchall()
-    query1.close()
-    print(data)
-    submissions = [list(item) for item in data]
-    return render_template('index.html',submissions=submissions)
+    return render_template('index.html',id=id)
 
 @app.route('/address', methods=['POST'])
 def address():
@@ -190,6 +182,9 @@ def saveChat():
         print('reached here')
         chatdata = request.json
         status = request.args.get('status')
+        # print(type(status))
+        uID = request.args.get('id')
+        print(uID)
         DATABASE_URL = os.getenv("DATABASE_URL")
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         print('before if')
@@ -216,7 +211,7 @@ def saveChat():
             datetime_obj = datetime.strptime(datetime_str, '%m/%d/%Y, %I:%M:%S %p')
             dateTime = datetime_obj.strftime('%Y-%m-%d %H:%M:%S.%f')
             query1 = conn.cursor()
-            query1.execute("INSERT INTO public.users ( User_id, Created_date,Property_address, Property_type, Listing_price, Number_of_bedrooms, Number_of_bathrooms, Square_footage, Lot_size, Year_built, Architectural_style, Bed_bath_dist, Community_name, School_district, Key_features, Energy_efficiency, Hoa_info, Additional_comments) Values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id",(123,dateTime,formattedAddress,propertyType,price,bed,bath,sizeSqft,sizeAcre,yearBuilt,architecturalStyle,bedBathDist,commName,schoolDist,keyFeatures,EEASF,HOA,additionalComments))
+            query1.execute("INSERT INTO public.users ( User_id, Created_date,Property_address, Property_type, Listing_price, Number_of_bedrooms, Number_of_bathrooms, Square_footage, Lot_size, Year_built, Architectural_style, Bed_bath_dist, Community_name, School_district, Key_features, Energy_efficiency, Hoa_info, Additional_comments) Values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id",(uID,dateTime,formattedAddress,propertyType,price,bed,bath,sizeSqft,sizeAcre,yearBuilt,architecturalStyle,bedBathDist,commName,schoolDist,keyFeatures,EEASF,HOA,additionalComments))
             users_id = query1.fetchone()[0]
             query1.close()
             for record in chatdata[1 : ]:
@@ -236,15 +231,18 @@ def saveChat():
         elif status == '2':       
             openai.api_key = os.getenv("OPEN_API_KEY")
             botList = []
+            # print(botList)
+            # print(chatdata)
             for rec in chatdata[1 : ]:
                 if rec['sender'] == 'bot':
                     botList.append(rec['message'])
             botResponse = '\n'.join(botList)
+            print(botResponse)
             message = chatdata[-1]
             custMessage = message['message']
             response = openai.Completion.create(
             model="text-davinci-003", 
-            prompt=f"{botResponse}\nAbove is the response please answer below question by considering the above response\n{custMessage}", 
+            prompt=f"{botResponse}\nAbove is the response please answer below question by considering the above response and make sure do not give extra spaces at the begining\n{custMessage}", 
             temperature=0, 
             max_tokens=1500
             )
@@ -257,6 +255,28 @@ def saveChat():
     finally:
         conn.close()
 
+@app.route('/viewList', methods = ['GET'])
+def viewList():
+    try:
+        uID = request.args.get('id')
+        DATABASE_URL = os.getenv("DATABASE_URL")
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        query1 = conn.cursor()
+        query1.execute("Select Property_address,Created_date from public.users where User_id = %s",(uID,))
+        data = query1.fetchall()
+        query1.close()
+        myList = []
+        for address,createdDate in data:
+            my_dict = {
+                'address':address,
+                'createdDate': createdDate
+            }
+            myList.append(my_dict)
+        return jsonify(myList)
+    except Exception as e:
+        print(e)
+    finally:
+        conn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

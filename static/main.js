@@ -1,4 +1,5 @@
 // Get DOM elements
+const typingAnimation = document.getElementById('typing-animation');
 const searchField = document.querySelector('.search-field');
 const infoSection = document.querySelector('.info-section');
 const mapSection = document.querySelector('.map-section');
@@ -8,12 +9,44 @@ const saveOutput = document.querySelector('#save-output');
 const saveOutputText = document.getElementById('save-output-text');
 const saveOutputLoading = document.getElementById('save-output-loading');
 const spinnerDiv = document.getElementById('Spinner');
+const spinner1Div = document.getElementById('Spinner1');
 const chatInput = document.getElementById('chatInput');
 const submitBtn = document.getElementById('submitBtn');
 const viewDetails = document.getElementById('viewDetails');
-const dynamicContentElement = document.getElementById("dynamicContent");
+const history = document.getElementById("history");
+const id = document.body.getAttribute('data-your-parameter');
 const chatHistory = [];
 
+//View List
+window.onload = function() {
+  chatInput.disabled = true;
+  fetch(`/viewList?id=${id}`)
+  .then(response => response.json())
+  .then(data =>{
+    viewList(data)
+  })
+  .catch(error =>{
+    console.log('Error',error);
+  })
+
+}
+
+function viewList(submissions) {
+  submissions.forEach(submission => {
+  const dateString = submission.createdDate;
+  const date = new Date(dateString);
+  const formattedDate = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit"
+});
+  const submissionDiv = document.createElement("div");
+  submissionDiv.classList.add("hisor", "rounded");
+  submissionDiv.textContent = submission.address + ' - Date Submitted ' + formattedDate;
+  console.log(submissionDiv)
+  history.appendChild(submissionDiv);
+  })  
+};
 //Autocomplete address field
  function initialize() {
   // console.log('reached111')
@@ -71,7 +104,7 @@ const chatHistory = [];
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 submitButton.addEventListener('click', async () => {
-  const typingAnimation = document.getElementById('typing-animation');
+  
   const address = document.getElementById('field1').value;
   const propertyType = document.getElementById('field2').value;
   const price = document.getElementById('field3').value;
@@ -94,7 +127,9 @@ submitButton.addEventListener('click', async () => {
   }
   
   else{
-  typingAnimation.style.display = 'block';
+  
+  spinner1Div.style.display = 'flex';
+  spinner1Div.classList.remove("spinnerHidden");
   const currentDate = new Date();
   const dateTime = currentDate.toLocaleString();
   chatHistory.push({
@@ -139,12 +174,13 @@ submitButton.addEventListener('click', async () => {
   });
 
   const data = await response.json();
-  typingAnimation.style.display = 'none';
-  // console.log(data.firstResponse)
+
+  spinner1Div.classList.add('spinnerHidden');
   displayBotMessage(data.firstResponse);
 
   // Second Response
-  typingAnimation.style.display = 'block';
+  spinner1Div.style.display = 'flex';
+  spinner1Div.classList.remove("spinnerHidden");
   const secondresponse = await fetch(`/chatbot?status=2`, {
     method: 'POST',
     headers: {
@@ -154,9 +190,10 @@ submitButton.addEventListener('click', async () => {
   });
 
   const secondData = await secondresponse.json();
-  typingAnimation.style.display = 'none';
+  // typingAnimation.style.display = 'none';
+  spinner1Div.classList.add('spinnerHidden');
   displayBotMessage(secondData.secondResponse);
-  // displayBotMessage(data.secondResponse);
+  chatInput.disabled = false;
   }
 });
 
@@ -165,8 +202,12 @@ function handleCustomerMessage() {
   const message = chatInput.value;
   displayUserMessage(message);
   chatInput.value='';
+  spinner1Div.style.display = 'flex';
+  spinner1Div.classList.remove("spinnerHidden");
+  // typingAnimation.style.display = 'block';
   const chatData = JSON.stringify(chatHistory);
-  fetch('/saveChat?status=2', {
+  console.log(id)
+  fetch(`/saveChat?status=2&id=${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -176,10 +217,11 @@ function handleCustomerMessage() {
   .then(response => response.json())
 
   .then(data => {
-    console.log(data)
+    spinner1Div.classList.add('spinnerHidden');
     displayBotMessage(data.response)
   })
   .catch(error => {
+    spinner1Div.classList.add('spinnerHidden');
     console.error('Error saving chat history:', error);
   });
 }
@@ -205,7 +247,7 @@ saveOutput.addEventListener('click', async () =>{
   saveOutput.disabled = true;
 
   const chatData = JSON.stringify(chatHistory);
-  fetch('/saveChat?status=1', {
+  fetch(`/saveChat?status=1&id=${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -221,6 +263,9 @@ saveOutput.addEventListener('click', async () =>{
     alert(data.status);
   })
   .catch(error => {
+    saveOutputText.style.display = 'inline-block';
+    saveOutputLoading.style.display = 'none';
+    saveOutput.disabled = false;
     console.error('Error saving chat history:', error);
   });
 })
@@ -255,8 +300,6 @@ function displayBotMessage(message) {
     message: message,
     dateTime: dateTime
   });
-  // chatMessages.insertBefore(messageElement, chatMessages.firstChild);
-  // chatMessages.appendChild(messageElement);
 }
 
 // Function to display user message
@@ -290,12 +333,4 @@ function copyToClipboard(text) {
   alert('Chat content copied to clipboard!');
 }
 
-viewDetails.addEventListener('click', async () => {
-// Iterate over the submissions array and generate the HTML dynamically
-submissions.forEach(submission => {
-  var submissionDiv = document.createElement("div");
-  submissionDiv.classList.add("hisor", "rounded");
-  submissionDiv.textContent = submission;
-  dynamicContentElement.appendChild(submissionDiv);
-  });
-})
+

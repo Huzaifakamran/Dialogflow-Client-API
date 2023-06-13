@@ -356,6 +356,17 @@ hr {
   background-color: #00000063;
   border-radius: 10px;
 }
+.spinnerAbsolute1{
+  width: 43%;
+  height: 70%;
+  position: absolute;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: auto;
+  background-color: #00000063;
+  border-radius: 10px;
+}
 .spinnerHidden{
   /* opacity: 0; */
   display: none !important;

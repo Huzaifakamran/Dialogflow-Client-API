@@ -24,7 +24,7 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script> -->
   </head>
-  <body>
+  <body data-your-parameter="{{ id }}">
     <div class="header">
       <div class="header-left">
         <button class="headers-button">View Saved</button>
@@ -75,6 +75,12 @@
         </div>
       </div>
       <div class="right-section" id="chat-messages">
+        <!-- Spinner -->
+        <div class="d-flex justify-content-center spinnerAbsolute1 spinnerHidden" id="Spinner1">
+          <div class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <!-- Chat Input -->
         <div class="inputChat">
           <input type="text" id="chatInput" placeholder="Request an Edit or Change"><button class="submitChat" id="submitBtn"><img src="../static/icons/send.png" alt=""></button>
@@ -112,7 +118,6 @@
           </h2>
           <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
             <div class="accordion-body" id="history">
-              <div class="hisor rounded" id="dunamicContent"></div>
             </div>
           </div>
         </div>
@@ -120,5 +125,6 @@
       </div>
     </div>
     <script src="../static/main.js"></script>
+ 
   </body>
 </html>
