@@ -55,13 +55,28 @@ function viewList(submissions) {
   const autocomplete = new google.maps.places.Autocomplete(input);
   google.maps.event.addListener(autocomplete, 'place_changed', function () {
     spinnerDiv.style.display = 'flex';
-    spinnerDiv.classList.remove("spinnerHidden"); // start spinning
+    spinnerDiv.classList.remove("spinnerHidden");
     const place = autocomplete.getPlace();
-    // console.log(place)
+    const lat = place.geometry.location.lng();
+    const lng = place.geometry.location.lat();
+
+    // Display the map
+    const mapContainer = document.getElementById('map-view');
+    mapContainer.innerHTML = '';
+    const mapOptions = {
+      center: { lat, lng },
+      zoom: 0
+    };
+    const map = new google.maps.Map(mapContainer, mapOptions);
+
+    // Add a marker at the selected place
+    new google.maps.Marker({
+      position: { lat, lng },
+      map: map,
+      title: place.name
+    });
+
     const data = {address:place};
-      // document.getElementById('city2').value = place.name;
-      // document.getElementById('cityLat').value = place.geometry.location.lat();
-      // document.getElementById('cityLng').value = place.geometry.location.lng();
       fetch(`/address`, {
         method: 'POST',
         headers: {

@@ -109,7 +109,7 @@ hr {
   background-color: rgba(211, 211, 211, 0.5);;
   padding: 10px;
   /* border-radius: 5px; */
-  height: 400px;
+  height: 250px;
   border-radius: 15px;
 }
 
@@ -117,7 +117,7 @@ hr {
   background-color: rgba(211, 211, 211, 0.5);
   padding: 10px;
   /* border-radius: 5px; */
-  height: 200px;
+  height: 300px;
   border-radius: 15px;
 }
 
@@ -443,7 +443,7 @@ hr {
     width: 120%;
   }
   .info-section {
-    height: 120%;
+    height: 50%;
     width: 120%;
   } 
   

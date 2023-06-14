@@ -1,0 +1,10 @@
+beautifulsoup4==4.12.2
+Flask==2.3.2
+Flask==2.2.3
+Flask_Cors==3.0.10
+openai==0.27.6
+protobuf==3.20.3
+psycopg2==2.9.6
+python-dotenv==1.0.0
+Requests==2.31.0
+gunicorn==20.1.0
