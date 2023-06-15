@@ -66,7 +66,7 @@ hr {
 
 .left-section {
   width: 50%;
-  height: 95%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -85,13 +85,15 @@ hr {
   font-size: 16px;
   height: 50px !important;
   background-color: rgba(211, 211, 211, 0.5);
-  background-image: url('./icons/search.png');
-  background-size: 30px;
-  background-repeat: no-repeat;
-  background-position-x: 455px;
-  background-position-y: center;
   color: #fff;
   padding-right: 20px; /* add some padding to make space for the icon */
+}
+.search-icon{
+  display: flex;
+}
+.search-button img{
+  /* position: relative; */
+  width: 35px;
 }
 .search-field::placeholder {
   color: white;
@@ -117,7 +119,7 @@ hr {
   background-color: rgba(211, 211, 211, 0.5);
   padding: 10px;
   /* border-radius: 5px; */
-  height: 300px;
+  height: 250px;
   border-radius: 15px;
 }
 
@@ -160,7 +162,7 @@ hr {
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-height: 78%;
+  max-height: 110%;
   overflow: hidden;
   overflow-y: scroll;
   border-radius: 10px;
@@ -298,16 +300,16 @@ hr {
     cursor: pointer;
     padding: 5px;
 }
-.submitChat img {
-  width: 60%; /* Adjust the size of the icon */
-}
+/* .submitChat img {
+  width: 60%; 
+} */
 .inputChat{
   display: flex;
   align-items: center;
-  position: absolute;
-  width: 44% !important;
+  /* position: absolute; */
+  width: 95% !important;
   height: 40px !important;
-  top: 670px;
+  /* top: 670px; */
   /* background-color: #4e98ca;
     color: white;
     max-width: 70%;
@@ -319,10 +321,11 @@ hr {
 .reqeustButtons{
   display: flex;
   align-items: center;
-  position: absolute;
+  /* position: absolute; */
   width: 44% !important;
   height: 40px !important;
-  top: 747px;
+  /* top: 747px; */
+  margin: 30px 0px 0px 0px;
   align-items: center;
   justify-content: space-around;
 }
@@ -339,7 +342,24 @@ hr {
   background: linear-gradient(90deg, rgb(245, 188, 0) 0%, rgb(248, 121, 3) 100%);
   
 }
-
+.search-button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  height: 50px;
+  background: none;
+  border: none;
+  width: 30%;
+}
+.chat{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  background-color: #027ae4;
+}
 .typing-animation {
   display: none;
 }
@@ -347,7 +367,7 @@ hr {
 
 .spinnerAbsolute{
   width: 30%;
-  height: 50%;
+  height: 33%;
   position: absolute;
   display: flex !important;
   justify-content: center !important;
@@ -396,60 +416,31 @@ hr {
 
 
 /* MEdia Queries */
-@media only screen and (max-height: 699px){
-  .search-field{
-    background-position-x: 400px !important;
-    
-  }
-  .info-section {
-  height: 120%;
-  width: 120%;
-} 
 
-.spinnerAbsolute{
-  width: 35.5%;
-  height: 65%;
-}
-.inputChat{
-  display: flex;
-  align-items: center;
-  position: absolute;
-  width: 44% !important;
-  height: 40px !important;
-  top: 665px;
-  /* background-color: #4e98ca;
-    color: white;
-    max-width: 70%;
-    align-self: flex-end;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 10px 10px 0 10px; */
-}
-.reqeustButtons{
-  display: flex;
-  align-items: center;
-  position: absolute;
-  width: 44% !important;
-  height: 40px !important;
-  top: 750px;
-  align-items: center;
-  justify-content: space-around;
-}
-}
 
 @media only screen and (max-width: 1350px){
-  .search-field{
-    background-position-x: 450px;
+  .search-icon{
+    width: 120%;
+  }
+  .search-button{
+    width: 35%;
+  }
+  .submit-button{
     width: 120%;
   }
   .info-section {
-    height: 50%;
+    height: 70%;
     width: 120%;
   } 
+  .map-section {
+    height: 50%;
+    width: 120%;
+
+  }
   
   .spinnerAbsolute{
     width: 35.5%;
-    height: 65%;
+    height: 40%;  
   }
   
 }
@@ -464,8 +455,8 @@ hr {
     background-position-x: 300px;
   }
   .spinnerAbsolute{
-    width: 35%;
-    height: 65%;
+    width: 34%;
+    height: 40%;
   }
 }
 @media only screen and (max-width: 1022px){
@@ -474,7 +465,7 @@ hr {
   }
   .spinnerAbsolute{
     width: 34.5%;
-    height: 65%;
+    height: 35%;
   }
 }
 
@@ -482,6 +473,32 @@ hr {
   .info-section {
     height: auto;
   } 
+  .info-section{
+    height: 70%;
+    overflow-y: scroll;
+  }
+  .info-section::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+    /* display: none; */
+    overflow: hidden;
+    height: 20px;
+  }
+  .info-section::-webkit-scrollbar-thumb {
+    overflow: hidden;
+    /* display: none; */
+    background-color: #00000041;
+    border-radius: 10px;
+    height: 5px;
+  }
+  .info-section::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  .map-section {
+    height: 80%;
+    width: 120%;
+
+  }
 .right-section {
   border-radius: 2%;
 
@@ -489,27 +506,41 @@ hr {
 .fields{
   width: 90%;
 }
-.search-field{
-  background-position-x: 200px;
-}
+
 .spinnerAbsolute{
-  width: 33.5%;
-  height: 60%;
+  width: 31%;
+  height: 28%;
 }
 }
 @media only screen and (max-width: 725px){
-  .search-field{
-    background-position-x: 530px;
-    width: 580px;
+  .search-icon{
+    width: 580px !important;
+    /* width: 200% !important; */
+  }
+  .search-button{
+    width: 80%;
   }
   .containerM{
     flex-direction: column;
     height: 1400px;
   }
+  .map-section {
+    height: 80% !important;
+    width: 120%;
+
+  }
+  .conversation{
+    max-height: 95%;
+  }
   .info-section {
     height: auto;
     width: 580px;
   } 
+  .map-section {
+    height: auto;
+    width: 580px;
+
+  }
   .submit-button{
     width: 580px;
   }
@@ -519,20 +550,60 @@ hr {
     height: 580px;
     margin: 0px 0px 0px 20px;
   }
-.inputChat{
+/* .inputChat{
   width: 78% !important;
   height: 40px !important;
   top: 1300px;
-}
-.reqeustButtons{
-  width: 78% !important;
-  top: 1470px;
+} */
 
+.spinnerAbsolute{
+  width: 83%;
+  height: 38%;
+}
+}
+@media only screen and (max-height: 699px){
+  .search-icon{
+    width: 120% !important;
+  }
+  .search-button{
+    width: 36% !important;
+  }
+  .info-section {
+  height: 120%;
+  width: 120%;
+} 
+.submit-button{
+  width: 120%;
+}
+.map-section {
+  height: 120%;
+  width: 120%;
+}
+.conversation{
+  max-height: 95%;
 }
 .spinnerAbsolute{
-  width: 81%;
-  height: 62%;
+  width: 35.5%;
+  height: 35%;
 }
+/* .inputChat{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 44% !important;
+  height: 40px !important;
+  top: 665px;
+} */
+/* .reqeustButtons{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 44% !important;
+  height: 40px !important;
+  top: 750px;
+  align-items: center;
+  justify-content: space-around;
+} */
 }
 @media only screen and (max-width: 660px){
   .search-field{
@@ -547,6 +618,11 @@ hr {
     height: auto;
     width: 500px;
   } 
+  .map-section {
+    height: auto;
+    width: 500px;
+
+  }
   .submit-button{
     width: 500px;
   }
@@ -581,6 +657,11 @@ hr {
     height: auto;
     width: 450px;
   } 
+  .map-section {
+    height: auto;
+    width: 450px;
+
+  }
   .submit-button{
     width: 450px;
   }
@@ -604,6 +685,11 @@ hr {
     height: auto;
     width: 400px;
   } 
+  .map-section {
+    height: auto;
+    width: 400px;
+
+  }
   .submit-button{
     width: 400px;
   }
@@ -627,6 +713,10 @@ hr {
     height: auto;
     width: 350px;
   } 
+  .map-section {
+    height: auto;
+    width: 350px;
+  }
   .submit-button{
     width: 350px;
   }
@@ -653,6 +743,11 @@ hr {
     height: auto;
     width: 300px;
   } 
+  .map-section {
+    height: auto;
+    width: 300px;
+
+  }
   .submit-button{
     width: 300px;
   }

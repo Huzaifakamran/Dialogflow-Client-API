@@ -38,9 +38,8 @@
     <hr>
     <div class="containerM">
       <div class="left-section">
-        <div>
-          <input id="fromloc" class="search-field" type="text" placeholder="Address Lookup">
-        </div>
+        <div class="search-icon">
+          <input id="fromloc" class="search-field" type="text" placeholder="Address Lookup"></div>
         <div class="info-section">
 
           <!-- SPINNER LOADER -->
@@ -69,7 +68,7 @@
         </div>
         <div class="map-section" id="map-view"> 
         </div>
-        <div>
+        <div class="listing-btn">
           <button class="submit-button">Create Listing Description</button>
         </div>
       </div>
@@ -80,9 +79,21 @@
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
+        <!-- Chat messages -->
+        <div class="conversation">
+          <div class="typing-animation" id="typing-animation">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>     
+        
+      </div>
         <!-- Chat Input -->
+        <div class="chat">
         <div class="inputChat">
-          <input type="text" id="chatInput" placeholder="Request an Edit or Change"><button class="submitChat" id="submitBtn"><img src="../static/icons/send.png" alt=""></button>
+          <input type="text" id="chatInput" placeholder="Request an Edit or Change"><button class="submitChat" id="submitBtn">
+            <!-- <img src="../static/icons/send.png" alt=""> -->
+          </button>
         </div>
         <div class="reqeustButtons">
           <button class="reqbutton" id ="save-output">
@@ -92,15 +103,6 @@
           <!-- <button class="reqbutton">Share Output</button> -->
           <!-- <button class="reqbutton">Copy Output</button> -->
         </div>
-        
-        <!-- Chat messages -->
-        <div class="conversation">
-          <div class="typing-animation" id="typing-animation">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>     
-        
       </div>
       </div>
       
