@@ -94,7 +94,6 @@ def home(id):
 @app.route('/address', methods=['POST'])
 def address():
     address = request.json
-    # formattedAddress = address['address']['formatted_address']
     result = realtorScrap(address)
     print(result)
     return result
@@ -283,4 +282,4 @@ def viewList():
         conn.close()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=5000,host='0.0.0.0')
