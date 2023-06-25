@@ -376,15 +376,17 @@ hr {
   border-radius: 10px;
 }
 .spinnerAbsolute1{
-  width: 43%;
-  height: 70%;
+  width: 10%;
+  height: 10%;
   position: absolute;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  margin: auto;
+  /* margin: auto; */
   background-color: #00000063;
   border-radius: 10px;
+  margin-top: 15%;
+  margin-left: 17%;
 }
 .spinnerHidden{
   /* opacity: 0; */
@@ -558,6 +560,10 @@ hr {
 .spinnerAbsolute{
   width: 83%;
   height: 38%;
+}
+.spinnerAbsolute1{
+  margin-top: 15%;
+  margin-left: 35%;
 }
 }
 @media only screen and (max-height: 699px){

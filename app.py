@@ -17,6 +17,7 @@ load_dotenv()
 
 def realtorScrap(address):
     # print(address)
+    
     my_dict = {}
     addressComponents = address['address']['address_components']
     for record in addressComponents:
@@ -24,7 +25,7 @@ def realtorScrap(address):
             my_dict['street_number'] = record['short_name']
             continue
         if 'route' in record['types']:
-            my_dict['route'] = record['long_name']
+            my_dict['route'] = record['short_name']
             continue
         if 'locality' in record['types']:
             my_dict['locality'] = record['short_name']
@@ -38,50 +39,62 @@ def realtorScrap(address):
     areaLevelOne = my_dict['areaLevelOne']
     print(areaLevelOne)
     o={}
-    target_url = f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}"
-    head={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"}
-    resp = requests.get(target_url, headers=head)
-    soup = BeautifulSoup(resp.text, 'html.parser')
-    allData = soup.find_all("div",{"class":"property-wrap"})
-    route = my_dict['route'].split(' ')[0]
-    print('route',route)
-    inputAddress = my_dict['street_number'] + ' ' + route
-    print('input',inputAddress)
-    # print(allData)
-    for i in range(0, len(allData)):
-        address = allData[i].find("div",{"data-label":"pc-address"}).text
-        # print(address)
-        if inputAddress in address:
-            print('under if')
-            o["price"]=allData[i].find("span",{"data-label":"pc-price"}).text
-            metaData = allData[i].find("ul",{"class":"property-meta"})
-            allMeta = metaData.find_all("li")
-            for x in range(0, len(allMeta)):
-                try:
-                    o["bed"]=allMeta[0].text
-                except:
-                    o["bed"]=None
-                try:
-                    o["bath"]=allMeta[1].text
-                except:
-                    o["bath"]=None
-                try:
-                    o["size-sqft"]=allMeta[2].text
-                except:
-                    o["size-sqft"]=None
-                try:
-                    o["size-acre"]=allMeta[3].text
-                except:
-                    o["size-acre"]=None
-            o["address"]=allData[i].find("div",{"data-label":"pc-address"}).text
-            o['status'] = True
-            # print(o)
-            return json.dumps(o)
-        
+    urls = [f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}",
+            "https://www.realtor.com/recommended",
+            f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}/show-newest-listings/sby-6",
+            f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}/show-price-reduced/sby-6",
+            f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}/show-open-house/sby-5",
+            f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}/show-recently-sold/sby-6",
+            f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}/shw-nc/sby-8",
+            f"https://www.realtor.com/newhomecommunities/{locality}_{areaLevelOne}",
+            f"https://www.realtor.com/realestateandhomes-search/{locality}_{areaLevelOne}/type-land/sby-6"
+            ]
+    for target_url in urls:
+        print(target_url)
+        head={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"}
+        resp = requests.get(target_url, headers=head)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        allData = soup.find_all("div",{"class":"property-wrap"})
+        route = my_dict['route'].split(' ')[0]
+        print('route',route)
+        inputAddress = my_dict['street_number'] + ' ' + route
+        print('input',inputAddress)
+        # print(allData)
+        for i in range(0, len(allData)):
+            address = allData[i].find("div",{"data-label":"pc-address"}).text
+            # print(address)
+            if inputAddress in address:
+                print('under if')
+                o["price"]=allData[i].find("span",{"data-label":"pc-price"}).text
+                metaData = allData[i].find("ul",{"class":"property-meta"})
+                allMeta = metaData.find_all("li")
+                for x in range(0, len(allMeta)):
+                    try:
+                        o["bed"]=allMeta[0].text
+                    except:
+                        o["bed"]=None
+                    try:
+                        o["bath"]=allMeta[1].text
+                    except:
+                        o["bath"]=None
+                    try:
+                        o["size-sqft"]=allMeta[2].text
+                    except:
+                        o["size-sqft"]=None
+                    try:
+                        o["size-acre"]=allMeta[3].text
+                    except:
+                        o["size-acre"]=None
+                o["address"]=allData[i].find("div",{"data-label":"pc-address"}).text
+                o['status'] = True
+                # print(o)
+                return json.dumps(o)
+            
+        continue
     return json.dumps({
-                "status":False,
-                "message":"property details unavailable please manually enter property details"
-                })
+                    "status":False,
+                    "message":"property details unavailable please manually enter property details"
+                    })
 
 @app.route('/', methods = ['GET'])
 def main():

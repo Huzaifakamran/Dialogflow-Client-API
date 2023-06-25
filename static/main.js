@@ -17,6 +17,14 @@ const history = document.getElementById("history");
 const id = document.body.getAttribute('data-your-parameter');
 const chatHistory = [];
 
+function scrollPage() {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    behavior: 'smooth'
+  });
+}
+
+
 //View List
 window.onload = function() {
   chatInput.disabled = true;
@@ -43,7 +51,7 @@ function viewList(submissions) {
   const submissionDiv = document.createElement("div");
   submissionDiv.classList.add("hisor", "rounded");
   submissionDiv.textContent = submission.address + ' - Date Submitted ' + formattedDate;
-  console.log(submissionDiv)
+  // console.log(submissionDiv)
   history.appendChild(submissionDiv);
   })  
 };
@@ -57,24 +65,37 @@ function viewList(submissions) {
     spinnerDiv.style.display = 'flex';
     spinnerDiv.classList.remove("spinnerHidden");
     const place = autocomplete.getPlace();
-    const lat = place.geometry.location.lng();
-    const lng = place.geometry.location.lat();
+    // const lat = place.geometry.location.lng();
+    // const lng = place.geometry.location.lat();
 
-    // Display the map
-    const mapContainer = document.getElementById('map-view');
-    mapContainer.innerHTML = '';
-    const mapOptions = {
-      center: { lat, lng },
-      zoom: 0
-    };
-    const map = new google.maps.Map(mapContainer, mapOptions);
+   // Geocode the address
+const geocoder = new google.maps.Geocoder();
+geocoder.geocode({ address: place.formatted_address }, (results, status) => {
+  if (status === 'OK' && results.length > 0) {
+    const location = results[0].geometry.location;
 
-    // Add a marker at the selected place
+     // Display the map
+     const mapContainer = document.getElementById('map-view');
+     mapContainer.innerHTML = '';
+     const mapOptions = {
+        center: location,
+        zoom: 15
+     };
+     const map = new google.maps.Map(mapContainer, mapOptions);
+
+    // Set the center of the map to the geocoded location
+    map.setCenter(location);
+
+    // Add a marker at the geocoded location
     new google.maps.Marker({
-      position: { lat, lng },
+      position: location,
       map: map,
       title: place.name
     });
+  } else {
+    console.error('Geocode was not successful for the following reason: ' + status);
+  }
+});
 
     const data = {address:place};
       fetch(`/address`, {
@@ -221,7 +242,7 @@ function handleCustomerMessage() {
   spinner1Div.classList.remove("spinnerHidden");
   // typingAnimation.style.display = 'block';
   const chatData = JSON.stringify(chatHistory);
-  console.log(id)
+  // console.log(id)
   fetch(`/saveChat?status=2&id=${id}`, {
     method: 'POST',
     headers: {
@@ -253,8 +274,8 @@ submitBtn.addEventListener('click', handleCustomerMessageEvents);
 
 //Save Output
 saveOutput.addEventListener('click', async () =>{
-  console.log(chatHistory)
-  console.log('clicked')
+  // console.log(chatHistory)
+  // console.log('clicked')
 
   // Show loading sign and disable the button
   saveOutputText.style.display = 'none';
